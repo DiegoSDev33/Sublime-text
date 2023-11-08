@@ -764,3 +764,105 @@ t.numero
 | ADRIANA        | ADRIANA@GMAIL.COM  | RJ     | 46544808   |
 | ADRIANA        | ADRIANA@GMAIL.COM  | RJ     | 46544808   |
 +----------------+--------------------+--------+------------+
+
+
+/*TRABALHANDO COM VIEWS*/
+
+SELECT c.NOME, c.SEXO, c.EMAIL, t.NUMERO, e.BAIRRO, e.CIDADE, e.ESTADO
+FROM CLIENTE c
+inner join telefone t
+on c.idCliente = t.id_Cliente
+inner join endereco e 
+on c.idCliente = e.id_Cliente;
+
+CREATE VIEW V_RELATORIO AS SELECT
+c.NOME,
+c.SEXO, 
+IFNULL(c.EMAIL, "--NOT FOUND--"), 
+t.NUMERO, 
+e.BAIRRO, 
+e.CIDADE, 
+e.ESTADO
+FROM CLIENTE c
+inner join telefone t
+on c.idCliente = t.id_Cliente
+inner join endereco e 
+on c.idCliente = e.id_Cliente;
+
+mysql> SELECT * FROM V_RELATORIO;
++----------------+------+----------------------------------+------------+---------------+----------------+--------+
+| NOME           | SEXO | IFNULL(c.EMAIL, "--NOT FOUND--") | NUMERO     | BAIRRO        | CIDADE         | ESTADO |
++----------------+------+----------------------------------+------------+---------------+----------------+--------+
+| Rose Celestina | F    | rose@gmail.com                   | 97878-6565 | Jd. Sandra    | Curitiba       | PN     |
+| Rose Celestina | F    | rose@gmail.com                   | 4159-5955  | Jd. Sandra    | Curitiba       | PN     |
+| Diego Santos   | M    | diego@gmail.com                  | 97878-6565 | Cocada        | Cotia          | SP     |
+| Juliana Santos | F    | juliana@gmail.com                | 3695-5659  | Jd. Banana    | Acre           | AC     |
+| Juliana Santos | F    | juliana@gmail.com                | 95885-5652 | Jd. Banana    | Acre           | AC     |
+| Tiago Santos   | M    | tiago@gmail.com                  | 91515-4552 | Jd. Primavera | Vitoria        | BA     |
+| Tiago Santos   | M    | tiago@gmail.com                  | 95988-7545 | Jd. Primavera | Vitoria        | BA     |
+| Juliana Santos | F    | juliana@gmail.com                | 4548-5757  | Jd. Banana    | Acre           | AC     |
+| Giovanna       | F    | giovanna@gmail.com               | 68976565   | Jd. Linda     | Piracicaba     | SP     |
+| Giovanna       | F    | giovanna@gmail.com               | 99656675   | Jd. Linda     | Piracicaba     | SP     |
+| FLAVIO         | M    | FLAVIO@IG.COM                    | 88687979   | COPACABANA    | RIO DE JANEIRO | RJ     |
+| ANDRE          | M    | ANDRE@GLOBO.COM                  | 88965676   | CENTRO        | VITORIA        | ES     |
+| KARLA          | F    | KARLA@GMAIL.COM                  | 89966809   | CENTRO        | CURITIBA       | PR     |
+| DANIELE        | F    | DANIELE@GMAIL.COM                | 88679978   | JARDINS       | SAO PAULO      | SP     |
+| LORENA         | F    | --NOT FOUND--                    | 99655768   | BOM RETIRO    | CURITIBA       | PR     |
+| EDUARDO        | M    | --NOT FOUND--                    | 89955665   | LAPA          | SAO PAULO      | SP     |
+| ANTONIO        | M    | ANTONIO@IG.COM                   | 77455786   | CENTRO        | RIO DE JANEIRO | RJ     |
+| ANTONIO        | M    | ANTONIO@IG.COM                   | 89766554   | CENTRO        | RIO DE JANEIRO | RJ     |
+| ANTONIO        | M    | ANTONIO@UOL.COM                  | 77755785   | CENTRO        | RIO DE JANEIRO | RJ     |
+| ANTONIO        | M    | ANTONIO@UOL.COM                  | 44522578   | CENTRO        | RIO DE JANEIRO | RJ     |
+| ADRIANA        | F    | ADRIANA@GMAIL.COM                | 46544808   | CENTRO        | RIO DE JANEIRO | RJ     |
+| ADRIANA        | F    | ADRIANA@GMAIL.COM                | 46544808   | CENTRO        | RIO DE JANEIRO | RJ     |
++----------------+------+----------------------------------+------------+---------------+----------------+--------+
+
+
+/* PARA EXCLUIR UMA VIEW*/
+mysql> DROP VIEW RELATORIO;
+
+/* AS VIEWS SAO VISTAS AO CHAMAR TABLES*/
+
+SHOW TABLES; **
+
+SELECT NOME, NUMERO, ESTADO
+FROM V_RELATORIO;
+
++----------------+------------+--------+
+| NOME           | NUMERO     | ESTADO |
++----------------+------------+--------+
+| Rose Celestina | 97878-6565 | PN     |
+| Rose Celestina | 4159-5955  | PN     |
+| Diego Santos   | 97878-6565 | SP     |
+| Juliana Santos | 3695-5659  | AC     |
+| Juliana Santos | 95885-5652 | AC     |
+| Tiago Santos   | 91515-4552 | BA     |
+| Tiago Santos   | 95988-7545 | BA     |
+| Juliana Santos | 4548-5757  | AC     |
+| Giovanna       | 68976565   | SP     |
+| Giovanna       | 99656675   | SP     |
+| FLAVIO         | 88687979   | RJ     |
+| ANDRE          | 88965676   | ES     |
+| KARLA          | 89966809   | PR     |
+| DANIELE        | 88679978   | SP     |
+| LORENA         | 99655768   | PR     |
+| EDUARDO        | 89955665   | SP     |
+| ANTONIO        | 77455786   | RJ     |
+| ANTONIO        | 89766554   | RJ     |
+| ANTONIO        | 77755785   | RJ     |
+| ANTONIO        | 44522578   | RJ     |
+| ADRIANA        | 46544808   | RJ     |
+| ADRIANA        | 46544808   | RJ     |
++----------------+------------+--------+
+
+/*OPERACAO EM DML EM VIEWS*/
+
+INSERT INTO V_RELATORIO VALUES(
+'Susane Von Richthofen', 'F', 'su@gmail.com', 'CEL', '6465454','Brooklin Velho','Campo Belo' 'SP'
+);
+
+/* NAO CONSEGUE DAR INSERT EM VIEWS QUE TENHA JOIN*/
+ERROR 1394 (HY000): Can not insert into join view 'comercio.v_relatorio' without fields list
+
+/*É PERMITIDO FAZER UPDATE EM VIEWS COM JOIN , DELETE E INSERT NAO PODE*/
+
