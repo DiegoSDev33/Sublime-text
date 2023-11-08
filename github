@@ -1,0 +1,72 @@
+versionamento , faz varias versoes e modificações dos arquivos sem perder nada, 
+varias pessoas podem usar ao mesmo tempo
+git - sistema de versionamento de codigo guarda em versao como snapschop
+ele faz uma rest do codigo que foi salvo anteriormente
+
+
+
+git --version 
+
+conf de usuario e email
+
+git config --global user.name "Diego Santos"
+git config --global user.email "diegodev.silva@gmail.com"
+
+// TRAZER ALGO PRONTO - GIT CLONE
+
+// ABRIR O PROMP DE COMANDO
+
+cd C:\Users\Analista\Desktop\git-digital-course (caminho da pasta que sera criado)
+git clone e o endereço link http do projeto ja existente de alguem
+
+
+//INICIANDO UM REPOSITORIO GIT
+git init - iniciou um repositorio git
+
+criar repositio nao marcar readme
+
+copiar os links em http
+e colar no terminal do vs code
+
+
+// quando tiver algo diferente o git status ira mostrar em vermelho
+//para adicionar as modificações
+
+git diff - mostra exatamente as linhas que foram modificadas
+
+
+git add .\index.html (arquivo que tem modificações)
+
+git commit -m "comentario" salva o arquivo conforme esta no momento
+
+git log - traz um historico dos ultimos commits feitos
+
+ git restore .\index.html - restaura uma aplicação modificada para seu estado inicial
+
+
+/CASO JA TENHA PASSADO SEU ARQUIVO PARA O STAGED COM GIT ADD
+
+git restore --staged .\index.html - retorna para os de modificados
+
+git remote - mostra se tem origem
+
+git push origin master - nao foi
+
+git push
+
+
+// MODIFICAÇÕES NO REMOTO 
+git fetch -- verifica o que ira vir para o codigo
+git pull - tras as alterações do remoto para o local
+
+git branch teste -- criou um brach teste
+git log --oneline --decorate
+
+git checkout teste - estou indo para a branch teste que criei
+
+git branch - mostra todas das branchs q existem
+
+git merge teste - trouxe para a main o que tinha criado na branch de teste
+
+
+
