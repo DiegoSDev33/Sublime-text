@@ -866,3 +866,110 @@ ERROR 1394 (HY000): Can not insert into join view 'comercio.v_relatorio' without
 
 /*É PERMITIDO FAZER UPDATE EM VIEWS COM JOIN , DELETE E INSERT NAO PODE*/
 
+/*ORDER BY*/
+
+select * from cliente /*ordena em ordem alfabetica*/
+order by nome;
+
++-----------+----------------+------+-----------------------+-----------+
+| idCliente | nome           | sexo | email                 | cpf       |
++-----------+----------------+------+-----------------------+-----------+
+|        23 | ADRIANA        | F    | ADRIANA@GMAIL.COM     | 88556942  |
+|        13 | ANDRE          | M    | ANDRE@GLOBO.COM       | 7687567   |
+|        20 | ANTONIO        | M    | ANTONIO@UOL.COM       | 3423565   |
+|        19 | ANTONIO        | M    | ANTONIO@IG.COM        | 12436767  |
+|        22 | CARMEM         | M    | CARMEM@IG.COM         | 787832213 |
+|        16 | DANIELE        | F    | DANIELE@GMAIL.COM     | 43536789  |
+|         1 | Diego Santos   | M    | diego@gmail.com       | 54154245  |
+|         8 | Diego Santos   | M    | diego.diego@gmail.com | 87343435  |
+|        18 | EDUARDO        | M    | NULL                  | 54376457  |
+|        21 | ELAINE         | M    | ELAINE@GLOBO.COM      | 32567763  |
+|        12 | FLAVIO         | M    | FLAVIO@IG.COM         | 4657765   |
+|        14 | GIOVANA        | F    | NULL                  | 0876655   |
+|         9 | Giovanna       | F    | giovanna@gmail.com    | 654456    |
+|         3 | Jessica Libia  | F    | jessica@gmail.com     | 878455    |
+|        24 | JOICE          | F    | JOICE@GMAIL.COM       | 55412256  |
+|         2 | Juliana Santos | F    | juliana@gmail.com     | 9849845   |
+|        15 | KARLA          | F    | KARLA@GMAIL.COM       | 545676778 |
+|        17 | LORENA         | F    | NULL                  | 774557887 |
+|         6 | Rafael Marino  | M    | rafael@gmail.com      | 24334810  |
+|        10 | Rebeca         | F    | rebeca@gmail.com      | 55456556  |
+|         5 | Rose Celestina | F    | rose@gmail.com        | 9877568   |
+|         4 | Ryan Santos    | M    | NULL                  | 323432    |
+|         7 | Tiago Santos   | M    | tiago@gmail.com       | 434215    |
++-----------+----------------+------+-----------------------+-----------+
+
+select * from cliente /*ordena por numero*/
+order by 1;
+
++-----------+----------------+------+-----------------------+-----------+
+| idCliente | nome           | sexo | email                 | cpf       |
++-----------+----------------+------+-----------------------+-----------+
+|         1 | Diego Santos   | M    | diego@gmail.com       | 54154245  |
+|         2 | Juliana Santos | F    | juliana@gmail.com     | 9849845   |
+|         3 | Jessica Libia  | F    | jessica@gmail.com     | 878455    |
+|         4 | Ryan Santos    | M    | NULL                  | 323432    |
+|         5 | Rose Celestina | F    | rose@gmail.com        | 9877568   |
+|         6 | Rafael Marino  | M    | rafael@gmail.com      | 24334810  |
+|         7 | Tiago Santos   | M    | tiago@gmail.com       | 434215    |
+|         8 | Diego Santos   | M    | diego.diego@gmail.com | 87343435  |
+|         9 | Giovanna       | F    | giovanna@gmail.com    | 654456    |
+|        10 | Rebeca         | F    | rebeca@gmail.com      | 55456556  |
+|        12 | FLAVIO         | M    | FLAVIO@IG.COM         | 4657765   |
+|        13 | ANDRE          | M    | ANDRE@GLOBO.COM       | 7687567   |
+|        14 | GIOVANA        | F    | NULL                  | 0876655   |
+|        15 | KARLA          | F    | KARLA@GMAIL.COM       | 545676778 |
+|        16 | DANIELE        | F    | DANIELE@GMAIL.COM     | 43536789  |
+|        17 | LORENA         | F    | NULL                  | 774557887 |
+|        18 | EDUARDO        | M    | NULL                  | 54376457  |
+|        19 | ANTONIO        | M    | ANTONIO@IG.COM        | 12436767  |
+|        20 | ANTONIO        | M    | ANTONIO@UOL.COM       | 3423565   |
+|        21 | ELAINE         | M    | ELAINE@GLOBO.COM      | 32567763  |
+|        22 | CARMEM         | M    | CARMEM@IG.COM         | 787832213 |
+|        23 | ADRIANA        | F    | ADRIANA@GMAIL.COM     | 88556942  |
+|        24 | JOICE          | F    | JOICE@GMAIL.COM       | 55412256  |
++-----------+----------------+------+-----------------------+-----------+
+
+
+/*Ordernando por mais uma coluna*/
+
+select * from cliente 
+order by 1, 2;
+
+/*MESCALANDO ORDER BY COM PROJECAO*/
+
+select * from cliente ?/*erro*/
+order by 1, 2;
+
+select NOME from cliente 
+order by nome;
+
+
+/*Order by desc /asc*/
+select * from cliente 
+order by 1 asc; /*Order crescente*/
+
+select * from cliente 
+order by 1 desc; /*Order Decrescente*/
+
+
+select * from cliente 
+order by 1 desc ,2;
+
+
+/*Ordenando com join*/
+
+SELECT
+c.NOME,
+c.SEXO, 
+IFNULL(c.EMAIL, "--NOT FOUND--"), 
+t.NUMERO, 
+e.BAIRRO, 
+e.CIDADE, 
+e.ESTADO
+FROM CLIENTE c
+inner join telefone t
+on c.idCliente = t.id_Cliente
+inner join endereco e 
+on c.idCliente = e.id_Cliente
+order by 1 desc;
