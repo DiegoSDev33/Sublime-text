@@ -1038,3 +1038,143 @@ END
 $
 
 call conta(150, 1000);
+
+
+/*PROCEDURES*/
+
+CREATE DATABASE Projeto;
+
+USE Projeto;
+
+CREATE TABLE CURSOS(
+
+	IDCURSO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL,
+	HORAS INT(3) NOT NULL,
+	VALOR FLOAT(10,2)NOT NULL
+);
+
+INSERT INTO CURSOS VALUES(NULL, 'JAVA', 30,150.00);
+INSERT INTO CURSOS VALUES(NULL, 'REACT', 80, 230.00);
+INSERT INTO CURSOS VALUES(NULL, 'REDES', 50, 100.00);
+
+DELIMITER & 
+
+CREATE PROCEDURE CAD_CURSO(P_NOME VARCHAR(30),
+						   P_HORAS INT (30),
+						  P_VALOR FLOAT(10,2))
+BEGIN
+	
+	INSERT INTO CURSOS VALUES(NULL, P_NOME, P_HORAS, P_VALOR);
+
+
+
+END
+&
+
+
+delimiter ;
+
+
+call cad_curso('JavaScript', 200,399.00);
+call cad_curso('Power BI', 70, 80.00);
+call cad_curso('HTML & CSS', 120,129.99);
+call cad_curso('Orientação a objetos', 200,150.00);
+
+
+/*entrar com mais dados, criar uma procedure para consultar cursos*/
+
+
+
+delimiter &
+
+create procedure consultarNomes(C_idCurso int)
+	begin
+
+		select nome from cursos
+		where idCurso = C_idCurso;
+	end
+	&
+
+	delimiter ;
+
+	call consultarNomes(2);
+
+	drop procedure consultarNomes;
+
+	create table vendedores(
+		IDVENDEDOR INT PRIMARY KEY AUTO_INCREMENT,
+		NOME VARCHAR(30),
+		SEXO CHAR(1),
+		JANEIRO FLOAT(10,2),
+		FEVEREIRO FLOAT(10,2),
+		MARCO FLOAT(10,2)
+
+		);
+
+
+	insert into vendedores values(null, 'Carlos', 'M', 231.12,478787.89,57847.65);
+	insert into vendedores values(null, 'Antonia', 'F', 231.12,457.89,5788747.65);
+	insert into vendedores values(null, 'Micalateia', 'F', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Jesnio', 'M', 2878.12,457.89,547.65);
+	insert into vendedores values(null, 'Wardson', 'M', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Roulisson', 'M', 231.12,487787.89,587.65);
+	insert into vendedores values(null, 'Mr. tea', 'M', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Bananoscoles', 'M', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Ivania', 'F', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Maria', 'F', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Pamela', 'F', 231.12,457.89,547.65);
+	insert into vendedores values(null, 'Jurema', 'F', 23101.12,41257.89,547.65);
+	insert into vendedores values(null, 'Jubileu', 'M', 23101.12,41257.89,7.65);
+
+
+/*FUNCAO MAX - TRAZ O VALOR MAXIMO DE UMA COLUNA*/
+
+SELECT MAX(FEVEREIRO) AS MAIOR_FEVEREIRO
+FROM VENDEDORES;
+
+/*FUNCAO MIN - TRAZ O VALOR MINIMO DE UMA COLUNA*/
+SELECT MIN(FEVEREIRO) AS MENOR_FEVEREIRO
+FROM VENDEDORES;
+
+/*FUNCAO AVG- TRAZ O VALOR MEDIO DE UMA COLUNA*/
+
+SELECT AVG(FEVEREIRO) AS MEDIA_FEVEREIRO
+FROM VENDEDORES;
+
+/*VARIAS FUNCOES*/
+
+SELECT MAX(JANEIRO) AS MAX_JAN,
+MIN(JANEIRO) AS MIN_JAN,
+AVG(JANEIRO) AS MEDIA_JAN
+FROM VENDEDORES;
+
+
+/*FUNCAO TRUNCATE - TRUNCATE PEDE UM NUMERO E A QUANTIDADE DE CASAS DECIMAIS*/
+
+SELECT MAX(JANEIRO) AS MAX_JAN,
+MIN(JANEIRO) AS MIN_JAN,
+TRUNCATE (AVG(JANEIRO),2) AS MEDIA_JAN
+FROM VENDEDORES;
+
+/*SOMA OS VALORES DE UMA COLUNA - SUM*/
+
+SELECT SUM(JANEIRO) AS TOTAL_SOMA
+FROM VENDEDORES;
+
+SELECT SUM(JANEIRO) AS JAN_SOMA,
+SUM(FEVEREIRO) AS FEV_SOMA,
+SUM(MARCO) AS MAR_SOMA
+FROM VENDEDORES;
+
+/*VENDAS POR SEXO*/
+
+SELECT SEXO, SUM(MARCO) AS TOTAL_MARCO
+FROM VENDEDORES
+GROUP BY SEXO;
+
+
+/* - SUBQUERI - VENDEDOR QUE VENDEU MENOS EM MARCO E O SEU NOME*/
+
+SELECT NOME, MARCO FROM VENDEDORES
+WHERE MARCO = (SELECT MIN(MARCO) FROM VENDEDORES);
